@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Bank</OriginalElement>
+  <nodes>
+    <node x="808.5" y="-9.5">Bank</node>
+    <node x="363.0" y="45.5">Customer</node>
+    <node x="812.5" y="432.0">Sex</node>
+    <node x="12.5" y="290.0">Event</node>
+    <node x="-34.0" y="89.5">History</node>
+    <node x="308.5" y="343.5">Person</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Person" target="Sex">
+      <point x="211.5" y="-0.0" />
+      <point x="-67.5" y="-0.0" />
+    </edge>
+    <edge source="History" target="Customer">
+      <point x="154.0" y="-0.0" />
+      <point x="-157.0" y="-0.0" />
+    </edge>
+    <edge source="Bank" target="Customer">
+      <point x="-191.5" y="-0.0" />
+      <point x="157.0" y="-0.0" />
+    </edge>
+    <edge source="History" target="Event">
+      <point x="0.0" y="70.5" />
+      <point x="0.0" y="-70.0" />
+    </edge>
+    <edge source="Customer" target="Person">
+      <point x="0.0" y="114.5" />
+      <point x="0.0" y="-136.5" />
+    </edge>
+  </edges>
+  <settings layout="Hıerarchıc Group" zoom="1.0" x="579.0" y="303.5" />
+  <SelectedNodes>
+    <node>Sex</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
