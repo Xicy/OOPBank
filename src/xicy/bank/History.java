@@ -1,3 +1,5 @@
+package xicy.bank;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,8 +19,7 @@ public class History {
         this.info = info;
     }
 
-    public Date getTime()
-    {
+    public Date getTime() {
         return dateOfOperation;
     }
 

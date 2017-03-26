@@ -1,3 +1,5 @@
+package xicy.bank;
+
 /**
  * Created by Umut Akkaya on 18.03.2017.
  */

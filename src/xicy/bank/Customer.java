@@ -1,3 +1,5 @@
+package xicy.bank;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -32,13 +34,13 @@ public class Customer extends Person {
 
     }
 
+    public long getId() {
+        return this.id;
+    }
+
     protected void setId(long id) {
         if (this.id == -1)
             this.id = id;
-    }
-
-    public long getId() {
-        return this.id;
     }
 
     public double getBalance() {

@@ -1,3 +1,5 @@
+package xicy.bank;
+
 import java.util.Map;
 
 /**
@@ -20,12 +22,11 @@ public class Bank {
         this.historyCollection = new HistoryCollection();
     }
 
-    public boolean addCustomer(Person person,double balance) {
+    public boolean addCustomer(Person person, double balance) {
         Customer customer = new Customer(person);
         customer.depositMoney(balance);
         boolean ret = customerCollection.addCustomer(customer);
-        if(ret)
-        {
+        if (ret) {
             customer.setHistoryCollection(historyCollection);
             historyCollection.addEvent(customer, Event.NewCustomer,"");
         }
@@ -35,8 +36,7 @@ public class Bank {
     public boolean removeCustomer(long id) {
         Customer get = getCustomer(id);
         boolean ret = customerCollection.removeCustomer(id);
-        if(ret)
-        {
+        if (ret) {
             historyCollection.addEvent(get, Event.RemoveCustomer,"");
         }
         return ret;

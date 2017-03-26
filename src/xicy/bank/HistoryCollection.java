@@ -1,3 +1,5 @@
+package xicy.bank;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ public class HistoryCollection {
         nextHistory = 0;
     }
 
-    public void addEvent(Customer customer, Event event,String info) {
+    public void addEvent(Customer customer, Event event, String info) {
         histories.put(nextHistory++, new History(customer, event,info));
     }
 

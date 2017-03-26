@@ -1,3 +1,5 @@
+package xicy.bank;
+
 import java.util.Date;
 
 /**
@@ -10,18 +12,14 @@ public class Person {
     private Date birthDay;
 
     public Person(String name, String lastName, Sex sex, Date birthDay) {
-        initialize(name, lastName, sex, birthDay);
-    }
-
-    public Person(String name, String lastName) {
-        initialize(name, lastName, Sex.Undefined, new Date(0));
-    }
-
-    private void initialize(String name, String lastName, Sex sex, Date birthDay) {
         this.name = name;
         this.lastName = lastName;
         this.sex = sex;
         this.birthDay = birthDay;
+    }
+
+    public Person(String name, String lastName) {
+        this(name, lastName, Sex.Undefined, new Date(0));
     }
 
     protected void UpdateProfile(Object oldValue, Object newValue) {
