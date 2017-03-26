@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Umut Akkaya on 17.03.2017.
  */
 public class Customer extends Person {
-    private long id;
+    private long id = -1;
     private double balance;
     private HistoryCollection historyCollection;
 

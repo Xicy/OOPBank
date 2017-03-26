@@ -1,5 +1,7 @@
 package xicy.bank;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -54,9 +56,6 @@ public class TestManual {
                 case "select":
                     selectCustomer(command);
                     break;
-                case "search":
-                    listCustomer(command);
-                    break;
                 case "history":
                     getAllHistory(command);
                     break;
@@ -107,19 +106,41 @@ public class TestManual {
     }
 
     private static void printHelp() {
+        System.out.println("----------------------------------------------------------------------");
+        System.out.println("help\t\tShow help text");
         if (selectedBank == null) {
-            System.out.println("addBank\t<Name:String>\tAdd bank to collection");
-            System.out.println("removeBank\t<ID:Long>\tRemove bank by id");
-            System.out.println("listBank\tList all bank");
-            System.out.println("exit\tClose to program");
-            //TODO:main
+
+            System.out.println("add\t\t\t<Name:String>\tAdd non limited bank to collection");
+            System.out.println("add\t\t\t<Name:String> <Capacity:Long>\tAdd limited bank to collection");
+            System.out.println("remove\t\t<ID:Long>\tRemove bank by id");
+            System.out.println("list\t\tList all bank");
+            System.out.println("select\t\t<ID:Long>\tSelect bank");
         } else if (selectedCustomer == null) {
-            System.out.println("bank");
-            //TODO:bank
+            System.out.println("add\t\t\t<Name:String> <LastName:String> <Sex:Undefined/Male/Female> <BirthDate:dd.mm.yyyy:String> <StartingBalance:Double>\tAdd customer");
+            System.out.println("remove\t\t<ID:Long>\tRemove customer by id");
+            System.out.println("list\t\tList all customers");
+            System.out.println("list\t\t<Name:String>\tSearch customer by full name");
+            System.out.println("select\t\t<ID:Long>\tSelect customer by id");
+            System.out.println("history\t\tGet all history of bank");
+            System.out.println("history\t\t<ID:Long>\tGet all history of Customer");
+            System.out.println("customer\t<ID:Long>\tGet customer of bank by id");
+            System.out.println("name\t\tGet bank name");
+            System.out.println("name\t\t<Name:String>\tSet bank name");
         } else {
-            System.out.println("customer");
-            //TODO:customer
+            System.out.println("name\t\tGet customer name");
+            System.out.println("name\t\t<Name:String>\t<LastName:String>\tSet customer name");
+            System.out.println("sex\t\t\tGet customer sex");
+            System.out.println("sex\t\t\t<Sex:Undefined/Male/Female>\tSet customer sex");
+            System.out.println("birthday\tGet customer birthday");
+            System.out.println("birthday\t<BirthDate:dd.mm.yyyy:String>\tSet customer birthday");
+            System.out.println("draw\t\tDraw money");
+            System.out.println("deposit\t\tdeposit money");
+            System.out.println("balance\t\tGet balance");
+            System.out.println("history\t\tGet history of customer");
         }
+        System.out.println("return\t\tUpward direction");
+        System.out.println("exit\t\tClose to program");
+        System.out.println("----------------------------------------------------------------------");
     }
 
     private static String[] translateCommandline(String toProcess) {
@@ -191,8 +212,8 @@ public class TestManual {
                 Runtime.getRuntime().exec("cls");
             else
                 Runtime.getRuntime().exec("clear");
-        } catch (final Exception e) {
-            //
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -221,7 +242,7 @@ public class TestManual {
         else if (checkArgs(args, 1))
             banks.put(bankId++, new Bank(args[1]));
         else
-            System.out.println("Error:xicy.bank.Bank was not added!");
+            System.out.println("Error:Bank was not added!");
     }
 
     private static void removeBank(String[] args) {
@@ -245,9 +266,13 @@ public class TestManual {
     }
 
     private static void addCustomer(String[] args) {
-        if (checkArgs(args, 5) && isNumeric(args[5]))
-            selectedBank.addCustomer(new Person(args[1], args[2], Sex.valueOf(capitalize(args[3])), new Date()), Double.parseDouble(args[5]));
-
+        if (checkArgs(args, 5) && isNumeric(args[5])) {
+            try {
+                selectedBank.addCustomer(new Person(args[1], args[2], Sex.valueOf(capitalize(args[3])), new SimpleDateFormat("dd.MM.yyyy").parse(args[4].replace('/', '.').replace('\\', '\\').replace(' ', '.'))), Double.parseDouble(args[5]));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void removeCustomer(String[] args) {
@@ -272,7 +297,6 @@ public class TestManual {
     }
 
     private static void getAllHistory(String[] args) {
-        //TODO bakılacak
         if (checkArgs(args, 1) && isNumeric(args[1]))
             printHistory(selectedBank.getHistoryOfUser(Long.parseLong(args[1])));
         else
@@ -296,7 +320,11 @@ public class TestManual {
 
     private static void birthdayCustomer(String[] args) {
         if (checkArgs(args, 1))
-            selectedCustomer.setBirthDay(new Date()); //TODO:
+            try {
+                selectedCustomer.setBirthDay(new SimpleDateFormat("dd.MM.yyyy").parse(args[1].replace('/', '.').replace('\\', '\\').replace(' ', '.')));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         else
             System.out.println("Customer Birthday:" + selectedCustomer.getBirthDay());
     }
