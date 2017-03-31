@@ -23,12 +23,11 @@ public class Bank {
     }
 
     public boolean addCustomer(Person person, double balance) {
-        Customer customer = new Customer(person);
-        customer.depositMoney(balance);
+        Customer customer = new Customer(person, balance);
         boolean ret = customerCollection.addCustomer(customer);
         if (ret) {
             customer.setHistoryCollection(historyCollection);
-            historyCollection.addEvent(customer, Event.NewCustomer,"");
+            historyCollection.addEvent(customer, Event.NewCustomer, "");
         }
         return ret;
     }
@@ -37,7 +36,7 @@ public class Bank {
         Customer get = getCustomer(id);
         boolean ret = customerCollection.removeCustomer(id);
         if (ret) {
-            historyCollection.addEvent(get, Event.RemoveCustomer,"");
+            historyCollection.addEvent(get, Event.RemoveCustomer, "");
         }
         return ret;
     }
@@ -63,7 +62,10 @@ public class Bank {
     }
 
     public History getHistory(long id) {
-        return historyCollection.getHistory(id);
+        if (historyCollection.containsKey(id))
+            return historyCollection.getHistory(id);
+        else
+            return null;
     }
 
     public Map<Long, History> getAllHistory() {

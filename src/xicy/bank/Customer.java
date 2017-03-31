@@ -12,7 +12,11 @@ public class Customer extends Person {
     private HistoryCollection historyCollection;
 
     public Customer(Person person) {
-        super(person.getName(), person.getLastName(), person.getSex(), person.getBirthDay());
+        this(person.getName(), person.getLastName(), person.getSex(), person.getBirthDay(), 0);
+    }
+
+    public Customer(Person person, double balance) {
+        this(person.getName(), person.getLastName(), person.getSex(), person.getBirthDay(), balance);
     }
 
     public Customer(String name, String lastName, Sex sex, Date birthDay, double balance) {
@@ -21,7 +25,7 @@ public class Customer extends Person {
     }
 
     public Customer(String name, String lastName) {
-        super(name, lastName);
+        this(name, lastName, Sex.Undefined, new Date(0), 0);
     }
 
     protected void setHistoryCollection(HistoryCollection historyCollection) {
@@ -49,7 +53,8 @@ public class Customer extends Person {
 
     public boolean drawMoney(double amount) {
         if (amount > 0 && this.balance >= amount) {
-            if (historyCollection != null) historyCollection.addEvent(Customer.this, Event.Draw, "Before Draw Balance : " + this.balance +"₺ / Draw Amount : " + amount + "₺");
+            if (historyCollection != null)
+                historyCollection.addEvent(Customer.this, Event.Draw, "Before Draw Balance : " + this.balance + "₺ / Draw Amount : " + amount + "₺");
             this.balance -= amount;
             return true;
         }
@@ -58,7 +63,8 @@ public class Customer extends Person {
 
     public boolean depositMoney(double amount) {
         if (amount > 0) {
-            if (historyCollection != null) historyCollection.addEvent(Customer.this, Event.Deposit, "Before Deposit Balance : " + this.balance +"₺ / Deposit Amount : " + amount + "₺");
+            if (historyCollection != null)
+                historyCollection.addEvent(Customer.this, Event.Deposit, "Before Deposit Balance : " + this.balance + "₺ / Deposit Amount : " + amount + "₺");
             this.balance += amount;
             return true;
         }

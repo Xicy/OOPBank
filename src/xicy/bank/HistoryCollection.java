@@ -15,6 +15,10 @@ public class HistoryCollection {
         nextHistory = 0;
     }
 
+    public boolean containsKey(long id) {
+        return histories.containsKey(id);
+    }
+
     public void addEvent(Customer customer, Event event, String info) {
         histories.put(nextHistory++, new History(customer, event,info));
     }

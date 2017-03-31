@@ -105,17 +105,21 @@ public class TestManual {
         } while (command.length < 1 || !command[0].equals("exit"));
     }
 
-    private static void printHelp() {
-        System.out.println("----------------------------------------------------------------------");
-        System.out.println("help\t\tShow help text");
-        if (selectedBank == null) {
+    private static void printLine(String text, int size) {
+        String lr = new String(new char[(size - text.length()) / 2]).replace("\0", "-");
+        System.out.println(lr + text + lr);
+    }
 
+    private static void printHelp() {
+        if (selectedBank == null) {
+            printLine("Bank System", 80);
             System.out.println("add\t\t\t<Name:String>\tAdd non limited bank to collection");
             System.out.println("add\t\t\t<Name:String> <Capacity:Long>\tAdd limited bank to collection");
             System.out.println("remove\t\t<ID:Long>\tRemove bank by id");
             System.out.println("list\t\tList all bank");
             System.out.println("select\t\t<ID:Long>\tSelect bank");
         } else if (selectedCustomer == null) {
+            printLine("Bank System of " + selectedBank.getName(), 80);
             System.out.println("add\t\t\t<Name:String> <LastName:String> <Sex:Undefined/Male/Female> <BirthDate:dd.mm.yyyy:String> <StartingBalance:Double>\tAdd customer");
             System.out.println("remove\t\t<ID:Long>\tRemove customer by id");
             System.out.println("list\t\tList all customers");
@@ -126,7 +130,9 @@ public class TestManual {
             System.out.println("customer\t<ID:Long>\tGet customer of bank by id");
             System.out.println("name\t\tGet bank name");
             System.out.println("name\t\t<Name:String>\tSet bank name");
+            System.out.println("return\t\tUpward direction");
         } else {
+            printLine("Customer System of " + selectedCustomer.getFullName(), 80);
             System.out.println("name\t\tGet customer name");
             System.out.println("name\t\t<Name:String>\t<LastName:String>\tSet customer name");
             System.out.println("sex\t\t\tGet customer sex");
@@ -137,10 +143,11 @@ public class TestManual {
             System.out.println("deposit\t\tdeposit money");
             System.out.println("balance\t\tGet balance");
             System.out.println("history\t\tGet history of customer");
+            System.out.println("return\t\tUpward direction");
         }
-        System.out.println("return\t\tUpward direction");
+        System.out.println("help\t\tShow help text");
         System.out.println("exit\t\tClose to program");
-        System.out.println("----------------------------------------------------------------------");
+        printLine("", 80);
     }
 
     private static String[] translateCommandline(String toProcess) {
