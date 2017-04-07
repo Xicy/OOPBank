@@ -11,60 +11,121 @@ public class Customer extends Person {
     private double balance;
     private HistoryCollection historyCollection;
 
+    /**
+     * Instantiates a new Customer.
+     *
+     * @param person the person
+     */
     public Customer(Person person) {
         this(person.getName(), person.getLastName(), person.getSex(), person.getBirthDay(), 0);
     }
 
+    /**
+     * Instantiates a new Customer.
+     *
+     * @param person  Customer information
+     * @param balance the starting balance of customer
+     */
     public Customer(Person person, double balance) {
         this(person.getName(), person.getLastName(), person.getSex(), person.getBirthDay(), balance);
     }
 
+    /**
+     * Instantiates a new Customer.
+     *
+     * @param name     the name of customer
+     * @param lastName the last name of customer
+     * @param sex      the sex of customer
+     * @param birthDay the birth day of customer
+     * @param balance  the starting balance of customer
+     */
     public Customer(String name, String lastName, Sex sex, Date birthDay, double balance) {
         super(name, lastName, sex, birthDay);
         this.balance = balance > 0 ? balance : 0;
     }
 
+    /**
+     * Instantiates a new Customer.
+     *
+     * @param name     the name of customer
+     * @param lastName the last name of customer
+     */
     public Customer(String name, String lastName) {
         this(name, lastName, Sex.Undefined, new Date(0), 0);
     }
 
+    /**
+     * Sets history collection.
+     * This starts only once time
+     *
+     * @param historyCollection the history collection
+     */
     protected void setHistoryCollection(HistoryCollection historyCollection) {
-        this.historyCollection = historyCollection;
+        if (this.historyCollection == null)
+            this.historyCollection = historyCollection;
     }
 
     protected void UpdateProfile(Object oldValue, Object newValue) {
         if (historyCollection != null)
-            historyCollection.addEvent(Customer.this, Event.UpdateProfil, oldValue + "->" + newValue);
+            historyCollection.add(Customer.this, Event.UpdateProfil, oldValue + "->" + newValue);
 
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public long getId() {
         return this.id;
     }
 
+    /**
+     * Sets id.
+     * This starts only once time
+     *
+     * @param id the id
+     */
     protected void setId(long id) {
         if (this.id == -1)
             this.id = id;
     }
 
+    /**
+     * Gets balance.
+     *
+     * @return the balance
+     */
     public double getBalance() {
         return this.balance;
     }
 
+    /**
+     * Draw money.
+     *
+     * @param amount the amount of money
+     * @return Draw status
+     */
     public boolean drawMoney(double amount) {
         if (amount > 0 && this.balance >= amount) {
             if (historyCollection != null)
-                historyCollection.addEvent(Customer.this, Event.Draw, "Before Draw Balance : " + this.balance + "₺ / Draw Amount : " + amount + "₺");
+                historyCollection.add(Customer.this, Event.Draw, "Before Draw Balance : " + this.balance + "₺ / Draw Amount : " + amount + "₺");
             this.balance -= amount;
             return true;
         }
         return false;
     }
 
+    /**
+     * Deposit money.
+     *
+     * @param amount the amount of money
+     * @return Deposit status
+     */
     public boolean depositMoney(double amount) {
         if (amount > 0) {
             if (historyCollection != null)
-                historyCollection.addEvent(Customer.this, Event.Deposit, "Before Deposit Balance : " + this.balance + "₺ / Deposit Amount : " + amount + "₺");
+                historyCollection.add(Customer.this, Event.Deposit, "Before Deposit Balance : " + this.balance + "₺ / Deposit Amount : " + amount + "₺");
             this.balance += amount;
             return true;
         }

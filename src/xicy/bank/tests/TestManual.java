@@ -1,22 +1,31 @@
-package xicy.bank;
+package xicy.bank.tests;
+
+import xicy.bank.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /**
  * Created by Umut Akkaya on 21.03.2017.
  */
+//TODO Set Errors
 public class TestManual {
-    private static Scanner scaner;
-    private static Map<Long, Bank> banks = new HashMap();
-    private static long bankId = 0;
+    private static final BankCollection banks = new BankCollection();
     private static Bank selectedBank = null;
     private static Customer selectedCustomer = null;
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
 
-        scaner = new Scanner(System.in);
+        Scanner scaner = new Scanner(System.in);
         String[] command;
         printHelp();
         do {
@@ -245,9 +254,9 @@ public class TestManual {
 
     private static void addBank(String[] args) {
         if (checkArgs(args, 2) && isNumeric(args[2]))
-            banks.put(bankId++, new Bank(args[1], Long.parseLong(args[2])));
+            banks.add(new Bank(args[1], Long.parseLong(args[2])));
         else if (checkArgs(args, 1))
-            banks.put(bankId++, new Bank(args[1]));
+            banks.add(new Bank(args[1]));
         else
             System.out.println("Error:Bank was not added!");
     }
@@ -260,14 +269,14 @@ public class TestManual {
     }
 
     private static void listBanks() {
-        for (Map.Entry<Long, Bank> bank : banks.entrySet()) {
+        for (Map.Entry<Long, Bank> bank : banks.getAll().entrySet()) {
             System.out.println("[" + bank.getKey() + "] " + bank.getValue().getName());
         }
     }
 
     private static void selectBank(String[] args) {
         if (checkArgs(args, 1) && isNumeric(args[1]))
-            selectedBank = banks.getOrDefault(Long.parseLong(args[1]), null);
+            selectedBank = banks.get(Long.parseLong(args[1]));
         else
             System.out.println("Please enter only numeric for this command");
     }

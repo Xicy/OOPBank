@@ -1,8 +1,20 @@
 package xicy.bank;
 
-/**
- * Created by Umut Akkaya on 18.03.2017.
- */
 public enum Event {
-    RemoveCustomer,NewCustomer,Deposit,Draw,UpdateProfil
+    /**
+     * Remove customer event.
+     */
+    RemoveCustomer, /**
+     * New customer event.
+     */
+    NewCustomer, /**
+     * Deposit event.
+     */
+    Deposit, /**
+     * Draw event.
+     */
+    Draw, /**
+     * Update profil event.
+     */
+    UpdateProfil
 }

@@ -1,4 +1,6 @@
-package xicy.bank;
+package xicy.bank.tests;
+
+import xicy.bank.*;
 
 import java.util.*;
 
@@ -7,15 +9,20 @@ import java.util.*;
  */
 public class TestAuto {
 
-    private static Person personTest = new Person("Test Auto", "Test Auto", Sex.Undefined, getDate(1, 1, 2000));
-    private static Person personUmutAkkaya = new Person("Umut", "Akkaya", Sex.Male, getDate(5, 12, 1996));
-    private static Person personUmutKaya = new Person("Umut", "Kaya", Sex.Male, getDate(17, 12, 1989));
-    private static Person personDevrimNazAkdas = new Person("Devrim", "Naz Akdaş", Sex.Female, getDate(23, 3, 1997));
-    private static Person personEmreSatir = new Person("Emre", "Şatır", Sex.Male, getDate(1, 1, 1990));
+    private static final Person personTest = new Person("Test Auto", "Test Auto", Sex.Undefined, getDate(1, 1, 2000));
+    private static final Person personUmutAkkaya = new Person("Umut", "Akkaya", Sex.Male, getDate(5, 12, 1996));
+    private static final Person personUmutKaya = new Person("Umut", "Kaya", Sex.Male, getDate(17, 12, 1989));
+    private static final Person personDevrimNazAkdas = new Person("Devrim", "Naz Akdas", Sex.Female, getDate(23, 3, 1997));
+    private static final Person personEmreSatir = new Person("Emre", "Satir", Sex.Male, getDate(1, 1, 1990));
 
-    private static Bank testBank = new Bank("Test Auto Bank");
-    private static Bank limitedBank = new Bank("Litmited Bank", 3);
+    private static final Bank testBank = new Bank("Test Auto Bank");
+    private static final Bank limitedBank = new Bank("Litmited Bank", 3);
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         testBank(testBank);
         testPerson(personTest);
@@ -49,7 +56,7 @@ public class TestAuto {
         printHistory(limitedBank.getAllHistory());
     }
 
-    public static void testPerson(Person cus) {
+    private static void testPerson(Person cus) {
         System.out.println();
         System.out.println("---Customer Test Auto Starting---");
         System.out.println();
@@ -73,7 +80,7 @@ public class TestAuto {
         System.out.println("---Customer Test Auto Ended---");
     }
 
-    public static void testCustomer(Customer cus) {
+    private static void testCustomer(Customer cus) {
         System.out.println();
         double cusMoney = cus.getBalance();
         System.out.println("\tDraw Customer Money : " + (cus.drawMoney(1)));
@@ -82,7 +89,7 @@ public class TestAuto {
         System.out.println("\tGet Customer Balance : " + (cus.getBalance() == cusMoney + 2));
     }
 
-    public static void testBank(Bank bank) {
+    private static void testBank(Bank bank) {
         System.out.println();
         System.out.println("---Bank Test Auto Starting---");
         System.out.println();
