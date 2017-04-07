@@ -71,7 +71,7 @@ public class Person {
      * @return the name
      */
     public boolean setName(String name) {
-        if(!this.name.equals(name)) {
+        if (!this.name.equals(name)) {
             UpdateProfile(this.name, name);
             this.name = name;
             return true;
@@ -95,7 +95,7 @@ public class Person {
      * @return the last name
      */
     public boolean setLastName(String lastName) {
-        if(!this.lastName.equals(lastName)) {
+        if (!this.lastName.equals(lastName)) {
             UpdateProfile(this.lastName, lastName);
             this.lastName = lastName;
             return true;
@@ -119,7 +119,7 @@ public class Person {
      * @return the sex
      */
     public boolean setSex(Sex sex) {
-        if(!this.sex.equals(sex)) {
+        if (!this.sex.equals(sex)) {
             UpdateProfile(this.sex, sex);
             this.sex = sex;
             return true;

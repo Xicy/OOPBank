@@ -36,7 +36,7 @@ public class HistoryCollection {
      * @param info     the info
      */
     public void add(Customer customer, Event event, String info) {
-        histories.put(nextHistory++, new History(customer, event,info));
+        histories.put(nextHistory++, new History(customer, event, info));
     }
 
     /**

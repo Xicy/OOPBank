@@ -39,7 +39,7 @@
     </properties>
   </component>
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop/a" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/Document" />
     <option name="OPTION_SCOPE" value="protected" />
     <option name="OPTION_HIERARCHY" value="false" />
     <option name="OPTION_NAVIGATOR" value="false" />
