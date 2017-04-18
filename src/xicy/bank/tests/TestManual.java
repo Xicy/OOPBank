@@ -217,11 +217,10 @@ public class TestManual {
     }
 
     private static boolean checkArgs(String[] args, int argCount) {
-        return args.length >= argCount + 1;
+        return args.length == argCount + 1;
     }
 
     private static void clearScreen() {
-        //TODO: daha düzgün
         try {
             final String os = System.getProperty("os.nameBank");
             if (os.contains("Windows"))
@@ -253,32 +252,48 @@ public class TestManual {
     }
 
     private static void addBank(String[] args) {
-        if (checkArgs(args, 2) && isNumeric(args[2]))
-            banks.add(new Bank(args[1], Long.parseLong(args[2])));
-        else if (checkArgs(args, 1))
-            banks.add(new Bank(args[1]));
-        else
-            System.out.println("Error:Bank was not added!");
+        if (checkArgs(args, 2) && isNumeric(args[2])) {
+            if (banks.add(new Bank(args[1], Long.parseLong(args[2]))))
+                System.out.println("Bank Added");
+            else
+                System.out.println("Error:Bank was not added");
+        } else if (checkArgs(args, 1)) {
+            if (banks.add(new Bank(args[1])))
+                System.out.println("Bank Added");
+            else
+                System.out.println("Error:Bank was not added");
+        } else
+            System.out.println("Error:Argument is wrong\nPlease check help");
     }
 
     private static void removeBank(String[] args) {
-        if (checkArgs(args, 1) && isNumeric(args[1]))
-            banks.remove(Long.parseLong(args[1]));
-        else
-            System.out.println("Please enter only numeric for this command");
+        if (checkArgs(args, 1) && isNumeric(args[1])) {
+            if (banks.remove(Long.parseLong(args[1])))
+                System.out.println("Bank Removed");
+            else
+                System.out.println("Bank was not removed");
+        } else
+            System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void listBanks() {
+        printLine("", 80);
         for (Map.Entry<Long, Bank> bank : banks.getAll().entrySet()) {
             System.out.println("[" + bank.getKey() + "] " + bank.getValue().getName());
         }
+        printLine("", 80);
     }
 
     private static void selectBank(String[] args) {
-        if (checkArgs(args, 1) && isNumeric(args[1]))
+        if (checkArgs(args, 1) && isNumeric(args[1])) {
             selectedBank = banks.get(Long.parseLong(args[1]));
-        else
-            System.out.println("Please enter only numeric for this command");
+            if (selectedBank == null && Long.parseLong(args[1]) != -1)
+                System.out.println("Error:Bank was not selected");
+            else if (Long.parseLong(args[1]) != -1)
+                System.out.println("Bank selected");
+            else System.out.println("Returned");
+        } else
+            System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void addCustomer(String[] args) {
@@ -286,52 +301,76 @@ public class TestManual {
             try {
                 selectedBank.addCustomer(new Person(args[1], args[2], Sex.valueOf(capitalize(args[3])), new SimpleDateFormat("dd.MM.yyyy").parse(args[4].replace('/', '.').replace('\\', '\\').replace(' ', '.'))), Double.parseDouble(args[5]));
             } catch (ParseException e) {
-                e.printStackTrace();
+                System.out.println("Error:Customer was not added");
             }
-        }
+        } else
+            System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void removeCustomer(String[] args) {
         if (checkArgs(args, 1) && isNumeric(args[1]))
-            selectedBank.removeCustomer(Long.parseLong(args[1]));
+            if (selectedBank.removeCustomer(Long.parseLong(args[1])))
+                System.out.println("Customer removed");
+            else
+                System.out.println("Customer was not removed");
         else
-            System.out.println("Please enter only numeric for this command");
+            System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void listCustomer(String[] args) {
+        printLine("", 80);
         if (checkArgs(args, 1))
             printCustomers(selectedBank.searchCustomersWithFullName(args[1]));
         else
             printCustomers(selectedBank.getAllCustomers());
+        printLine("", 80);
     }
 
     private static void selectCustomer(String[] args) {
-        if (checkArgs(args, 1) && isNumeric(args[1]))
+        if (checkArgs(args, 1) && isNumeric(args[1])) {
             selectedCustomer = selectedBank.getCustomer(Long.parseLong(args[1]));
-        else
+            if (selectedBank == null && Long.parseLong(args[1]) != -1)
+                System.out.println("Bank was not selected");
+            else if (Long.parseLong(args[1]) != -1)
+                System.out.println("Bank selected");
+            else System.out.println("Returned");
+        } else
             System.out.println("Please enter only numeric for this command");
     }
 
     private static void getAllHistory(String[] args) {
+        printLine("", 80);
         if (checkArgs(args, 1) && isNumeric(args[1]))
             printHistory(selectedBank.getHistoryOfUser(Long.parseLong(args[1])));
         else
             printHistory(selectedBank.getAllHistory());
+        printLine("", 80);
     }
 
     private static void nameBank(String[] args) {
         if (checkArgs(args, 1))
-            selectedBank.setName(args[1]);
-        else
+            if (selectedBank.setName(args[1]))
+                System.out.println("Bank name setted");
+            else
+                System.out.println("Bank name was not setted");
+        else if (checkArgs(args, 0))
             System.out.println("Bank Name:" + selectedBank.getName());
+        else System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void nameCustomer(String[] args) {
         if (checkArgs(args, 2)) {
-            selectedCustomer.setName(args[1]);
-            selectedCustomer.setLastName(args[2]);
-        } else
+            if (selectedCustomer.setName(args[1]))
+                System.out.println("Customer name setted");
+            else
+                System.out.println("Customer name was not setted");
+            if (selectedCustomer.setLastName(args[2]))
+                System.out.println("Customer lastname setted");
+            else
+                System.out.println("Customer lastname was not setted");
+        } else if (checkArgs(args, 0))
             System.out.println("Customer Name:" + selectedCustomer.getFullName());
+        else System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void birthdayCustomer(String[] args) {
@@ -339,10 +378,11 @@ public class TestManual {
             try {
                 selectedCustomer.setBirthDay(new SimpleDateFormat("dd.MM.yyyy").parse(args[1].replace('/', '.').replace('\\', '\\').replace(' ', '.')));
             } catch (ParseException e) {
-                e.printStackTrace();
+                System.out.println("Error:BirthDay was not setted");
             }
-        else
+        else if (checkArgs(args, 0))
             System.out.println("Customer Birthday:" + selectedCustomer.getBirthDay());
+        else System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void balanceCustomer() {
@@ -351,23 +391,33 @@ public class TestManual {
 
     private static void drawMoney(String[] args) {
         if (checkArgs(args, 1) && isNumeric(args[1]))
-            selectedCustomer.drawMoney(Double.parseDouble(args[1]));
+            if (selectedCustomer.drawMoney(Double.parseDouble(args[1])))
+                System.out.println("Money Drawed");
+            else System.out.println("Money not enough");
+        else System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void depositMoney(String[] args) {
         if (checkArgs(args, 1) && isNumeric(args[1]))
-            selectedCustomer.depositMoney(Double.parseDouble(args[1]));
+            if (selectedCustomer.depositMoney(Double.parseDouble(args[1])))
+                System.out.println("Money Deposited");
+            else System.out.println("Money was not deposited");
+        else System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void sexCustomer(String[] args) {
         if (checkArgs(args, 1))
-            selectedCustomer.setSex(Sex.valueOf(capitalize(args[1])));
-        else
+            if (selectedCustomer.setSex(Sex.valueOf(capitalize(args[1]))))
+                System.out.println("Sex setted");
+            else System.out.println("Sex was not setted");
+        else if (checkArgs(args, 0))
             System.out.println("Customer Sex : " + selectedCustomer.getSex());
+        else System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 
     private static void getCustomer(String[] args) {
         if (checkArgs(args, 1) && isNumeric(args[1]))
             System.out.println(selectedBank.getCustomer(Long.parseLong(args[1])));
+        else System.out.println("Error:Argument is wrong\nPlease check Help");
     }
 }
